@@ -1,0 +1,38 @@
+scgi_local = /tmp/rtorrent.sock
+
+encoding_list = UTF-8
+port_range = 49184-49184
+port_random = no
+check_hash = no
+directory = /torrents
+session = /torrents/.session
+#encryption = require,require_RC4,allow_incoming,try_outgoing
+use_udp_trackers = yes
+dht = off
+peer_exchange = no
+
+throttle.max_downloads.global.set = 1000
+throttle.max_uploads.global.set   = 1000
+throttle.min_peers.normal.set = 500
+throttle.max_peers.normal.set = 1000
+throttle.min_peers.seed.set = -1
+throttle.max_peers.seed.set = -1
+throttle.max_downloads.set = 100
+throttle.max_uploads.set = 100
+trackers.numwant.set = 100
+pieces.memory.max.set = 2048M
+network.max_open_sockets.set = 2048
+network.max_open_files.set = 10240
+network.http.max_open.set = 1024
+#network.receive_buffer.size.set =  4M
+#network.send_buffer.size.set    = 12M
+pieces.preload.type.set = 2
+#network.http.ssl_verify_host.set = 0
+network.http.ssl_verify_peer.set = 0
+network.http.dns_cache_timeout.set = 25
+network.xmlrpc.size_limit.set = 2M
+pieces.hash.on_completion.set = no
+protocol.encryption.set = allow_incoming,enable_retry,prefer_plaintext
+
+schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/tmp/rtorrent.sock"
+schedule = insufficient_disk_space,1,30,close_low_diskspace=500M
