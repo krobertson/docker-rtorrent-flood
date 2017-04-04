@@ -1,7 +1,7 @@
 scgi_local = /tmp/rtorrent.sock
 
 encoding_list = UTF-8
-port_range = 49184-49184
+port_range = <SEED_PORT>-<SEED_PORT>
 port_random = no
 check_hash = no
 directory = /torrents
