@@ -1,0 +1,19 @@
+workspace:
+  base: /srv/app
+  path: docker-rtorrent-flood
+
+pipeline:
+  clone:
+    image: plugins/git
+    tags: true
+    skip_verify: true
+
+  docker:
+    image: plugins/docker
+    repo: registry.r7n.me/ken/rtorrent-flood
+    registry: registry.r7n.me
+    insecure: true
+    tags: [ 'latest' ]
+    when:
+      event: [ push ]
+      branch: [ master ]
