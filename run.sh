@@ -1,8 +1,15 @@
 #!/bin/sh
 
+while [ ! -f /vpn/vars ] ; do
+  sleep 2
+done
+
+. /vpn/vars
+
 sed -i -e "s|<FLOOD_SECRET>|$FLOOD_SECRET|g" /usr/flood/config.js
 sed -i -e "s|<CONTEXT_PATH>|$CONTEXT_PATH|g" /usr/flood/config.js
 sed -i -e "s|<SEED_PORT>|$SEED_PORT|g" /home/torrent/.rtorrent.rc
+sed -i -e "s|<IP>|$IP|g" /home/torrent/.rtorrent.rc
 
 rm -f /torrents/rtorrent.lock
 mv /usr/flood /usr/fix && mv /usr/fix /usr/flood # fix strange bug
