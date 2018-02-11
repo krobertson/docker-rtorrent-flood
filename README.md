@@ -1,6 +1,6 @@
-## wonderfall/rtorrent-flood
+## rtorrent-flood
 
-![](https://camo.githubusercontent.com/d8f5cb502f06e0ea1cc171550c2bed035293c1a9/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6a6f686e667572726f772e636f6d2f73686172652f666c6f6f642d73637265656e73686f742d612d303630362e706e67)
+Based on wonderfall/dockerfiles/rtorrent-flood.
 
 #### Main features
 - Based on Alpine Linux.
