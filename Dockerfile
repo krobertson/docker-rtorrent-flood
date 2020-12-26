@@ -1,8 +1,8 @@
-FROM alpine:3.6
+FROM alpine:3.12
 
-ARG RTORRENT_VER=0.9.6
-ARG LIBTORRENT_VER=0.13.6
-ARG FLOOD_VER=1.0.0
+ARG RTORRENT_VER=0.9.8
+ARG LIBTORRENT_VER=0.13.8
+ARG FLOOD_VER=4.3.1
 ARG BUILD_CORES
 
 ENV UID=991 GID=991 \
@@ -13,7 +13,8 @@ ENV UID=991 GID=991 \
     SEED_PORT=44815
 
 RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
- && apk -U upgrade \
+  && set -e -x \\
+  &&  apk -U upgrade \
  && apk add -t build-dependencies \
     build-base \
     git \
@@ -29,6 +30,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     ncurses-dev \
     curl-dev \
     binutils \
+    linux-headers \
  && apk add \
     ca-certificates \
     curl \
@@ -40,14 +42,14 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     unrar \
     s6 \
     su-exec \
-    python \
+    python2 \
     nodejs \
     nodejs-npm \
     openjdk8-jre \
     java-jna-native \
  && cd /tmp && mkdir libtorrent rtorrent \
- && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
- && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/archive/${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
+ && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/v${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
+ && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_VER}/rtorrent-${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
  && cd /tmp \
  && git clone https://github.com/mirror/xmlrpc-c.git \
  && git clone https://github.com/Rudde/mktorrent.git \
@@ -58,7 +60,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && cd /tmp \
  && strip -s /usr/local/bin/rtorrent \
  && strip -s /usr/local/bin/mktorrent \
- && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jfurrow/flood/archive/v${FLOOD_VER}.tar.gz | tar xz --strip 1 \
+ && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jesec/flood/archive/v${FLOOD_VER}.tar.gz | tar xz --strip 1 \
  && npm install --production \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
