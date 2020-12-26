@@ -61,7 +61,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && strip -s /usr/local/bin/rtorrent \
  && strip -s /usr/local/bin/mktorrent \
  && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jesec/flood/archive/v${FLOOD_VER}.tar.gz | tar xz --strip 1 \
- && npm install --production \
+ && npm install && npm cache clean --force && npm run build \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
 

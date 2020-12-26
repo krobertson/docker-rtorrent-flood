@@ -7,9 +7,7 @@ check_hash = no
 directory = /data
 session = /torrents
 #encryption = require,require_RC4,allow_incoming,try_outgoing
-use_udp_trackers = yes
 dht = off
-peer_exchange = no
 
 throttle.max_downloads.global.set = 1000
 throttle.max_uploads.global.set   = 1000
